@@ -1,0 +1,146 @@
+import tkinter as tk #don't from tikinter import * (bad)
+#from model import Model as m
+
+test = 0
+
+class View:
+    def __init__(self, root, model):
+        self.root = root #tkinter root
+        self.model = model #model instance
+
+        self.dx = 6
+        self.dy = 3
+
+        self.pd = tk.StringVar()
+        self.cd = tk.StringVar()
+        self.pd.set("Programable text for use")
+        self.cd.set("Calculator")
+
+    #BUTTON FUNCTIONS START HERE
+    def un(self):
+        print("button with no function")
+        
+    def n1(self):
+        self.calc_input("1")
+
+    def n2(self):
+        self.calc_input("2")
+
+    def n3(self):
+        self.calc_input("3")
+
+    def n4(self):
+        self.calc_input("4")
+
+    def n5(self):
+        self.calc_input("5")
+
+    def n6(self):
+        self.calc_input("6")
+
+    def n7(self):
+        self.calc_input("7")
+
+    def n8(self):
+        self.calc_input("8")
+
+    def n9(self):
+        self.calc_input("9")
+
+    def n0(self):
+        self.calc_input("0")
+
+    def np(self):
+        self.model.input("+")
+
+    def nm(self):
+        self.model.input("-")
+
+    def nd(self):
+        self.model.input("/")
+
+    def nt(self):
+        self.model.input("*")
+
+    def ne(self):
+        self.model.input("=")
+        self.cd.set(str(self.model.get_result()))
+
+    def nc(self):
+        self.model.cancel()
+        self.cd.set("0")
+
+    def calc_input(self, i): #inputs number into calculator model and updates the display
+        self.model.input(i)
+        self.cd.set(self.model.get_buffer())
+    #BUTTON FUNCTIONS END HERE
+
+    def make_gui(self): #consttructs the gui
+        #frame which widgets attach to
+        f = tk.Frame(self.root)
+        f.pack(side=tk.LEFT)
+
+        #labels above and below buttons
+        tk.Label(f, textvariable=self.pd,bg="white",wrap=300,width=4*self.dx,height=self.dy).grid(row=0,column=0,columnspan=4,sticky=tk.N+tk.E+tk.S+tk.W)
+        tk.Label(f,bg="cyan",textvariable=self.cd,width=4*self.dx,height=self.dy).grid(row=0,column=4,columnspan=4,sticky=tk.N+tk.E+tk.S+tk.W)
+        tk.Label(f, text="this is the bottom section of the GUI",bg="white",wrap=300,width=8*self.dx,height=self.dy).grid(row=6,column=0,columnspan=8,sticky=tk.N+tk.E+tk.S+tk.W)
+
+        #logo to the left (by default) of the buttons
+        logo = tk.PhotoImage(file='m.gif')
+        i=tk.Label(f,bg="yellow",image=logo,width=4*self.dx,height=7*self.dy)
+        i.config(image=logo,width="200",height="200")
+        i.image=logo
+        i.grid(row=0,column=9,columnspan=4,rowspan=7,sticky=tk.N+tk.E+tk.S+tk.W)
+
+        #blankspace between buttons
+        tk.Label(f,width=self.dx,height=self.dy,bg="white").grid(row=1,column=4,rowspan=5,sticky=tk.N+tk.E+tk.S+tk.W)
+
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B0").grid(row=1,column=0)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B1").grid(row=1,column=1)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B2").grid(row=1,column=2)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B3").grid(row=1,column=3)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.nc,borderwidth=2,text="C").grid(row=1,column=5)#calc
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.nd,borderwidth=2,text="/").grid(row=1,column=6)#calc
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.nt,borderwidth=2,text="*").grid(row=1,column=7)#calc
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.nm,borderwidth=2,text="-").grid(row=1,column=8)#calc
+
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B4").grid(row=2,column=0)
+        imagebutton1 = tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=0,text="B5")
+        photo1 = tk.PhotoImage(file="b.gif")
+        imagebutton1.config(image=photo1,width="45",height="45")
+        imagebutton1.image=photo1
+        imagebutton1.grid(row=2,column=1)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B6").grid(row=2,column=2)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B7").grid(row=2,column=3)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.n7,borderwidth=2,text="7").grid(row=2,column=5)#calc
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.n8,borderwidth=2,text="8").grid(row=2,column=6)#calc
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.n9,borderwidth=2,text="9").grid(row=2,column=7)#calc
+        tk.Button(f,width=self.dx,bg="black",fg="white",command=self.np,borderwidth=2,text="+").grid(row=2,column=8,rowspan=2,sticky=tk.N+tk.E+tk.S+tk.W)#calc
+
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B8").grid(row=3,column=0)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B9").grid(row=3,column=1)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B10").grid(row=3,column=2)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B11").grid(row=3,column=3)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.n4,borderwidth=2,text="4").grid(row=3,column=5)#calc
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.n5,borderwidth=2,text="5").grid(row=3,column=6)#calc
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.n6,borderwidth=2,text="6").grid(row=3,column=7)#calc
+        #tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B0").grid(row=3,column=7)
+
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B12").grid(row=4,column=0)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B13").grid(row=4,column=1)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B14").grid(row=4,column=2)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B15").grid(row=4,column=3)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.n1,borderwidth=2,text="1").grid(row=4,column=5)#calc
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.n2,borderwidth=2,text="2").grid(row=4,column=6)#calc
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.n3,borderwidth=2,text="3").grid(row=4,column=7)#calc
+        tk.Button(f,width=self.dx,bg="black",fg="white",command=self.ne,borderwidth=2,text="=").grid(row=4,column=8,rowspan=2,sticky=tk.N+tk.E+tk.S+tk.W)#calc
+
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B16").grid(row=5,column=0)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B17").grid(row=5,column=1)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B18").grid(row=5,column=2)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B19").grid(row=5,column=3)
+        tk.Button(f,width=self.dx,bg="black",fg="white",command=self.n0,borderwidth=2,text="0").grid(row=5,column=5,columnspan=2,sticky=tk.N+tk.E+tk.S+tk.W)#calc
+        #tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B0").grid(row=5,column=5)
+        tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text=".").grid(row=5,column=7)#calc
+        #tk.Button(f,width=self.dx,height=self.dy,bg="black",fg="white",command=self.un,borderwidth=2,text="B0").grid(row=5,column=7)
+
